@@ -50,8 +50,21 @@ class MoviesController < ApplicationController
   def update
     @movie = Movie.find params[:id]
     @movie.update_attributes!(movie_params)
-    flash[:notice] = "#{@movie.title} was successfully updated."
+    
     redirect_to movie_path(@movie)
+  end
+  
+  def search
+    @similar_movies = Movie.similar_movies(params[:title])
+    if @similar_movies.nil?
+      flash[:notice] = "#{params[:title]} has no director info."
+      redirect_to root_url
+    end
+    if @similar_movies.length == 1
+      flash[:notice] = "No movies with the same director exist."
+      redirect_to root_url
+    end
+    @movie = Movie.find_by(title: params[:title])
   end
 
   def destroy
