@@ -60,10 +60,10 @@ class MoviesController < ApplicationController
       flash[:notice] = "#{params[:title]} has no director info."
       redirect_to root_url
     end
-    if @similar_movies.length == 1
-      flash[:notice] = "No movies with the same director exist."
-      redirect_to root_url
-    end
+    #if @similar_movies.length == 1
+     # flash[:notice] = "No movies with the same director exist."
+      #redirect_to root_url
+    #end
     @movie = Movie.find_by(title: params[:title])
   end
 
